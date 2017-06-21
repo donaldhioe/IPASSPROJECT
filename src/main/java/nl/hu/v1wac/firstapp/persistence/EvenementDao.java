@@ -78,7 +78,7 @@ public class EvenementDao extends BaseDAO {
 	public Evenement addEvenement(Evenement evenement) {
 		try (Connection con = getConnection()) {			
 			Statement stmt = con.createStatement();
-			String query = "UPDATE evenement SET geaccepteerd = 'nee' where evenementnummer =" + evenement.getEvenementnummer();
+			String query = "UPDATE evenement SET geaccepteerd = 'ja' where evenementnummer =" + evenement.getEvenementnummer();
 			stmt.executeUpdate(query);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
