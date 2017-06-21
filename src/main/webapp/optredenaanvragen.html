@@ -82,7 +82,7 @@
 	$("#aanvragen").click(function(response) {
 		var data = $("#newOptreden").serialize();
 		$.post("restservices/aanvraag", data, function(response) {
-			$("#response").text("De aanvraag is aangemaakt");
+			$("#response").text(JSON.stringify(response));
 		});
 	});
 	</script>
