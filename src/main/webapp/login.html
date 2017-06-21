@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>login page</title> 
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	
+	<style>
+		body {
+    		margin: 0;
+    		}
+		
+		ul {
+		    list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		    width: 20%;
+		    background-color: #f1f1f1;
+		    position: fixed;
+		    height: 100%;
+		    overflow: auto;
+		}
+		
+		li a {
+		    display: block;
+		    color: #000;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		li a.active {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+		
+		li a:hover:not(.active) {
+		    background-color: #555;
+		    color: white;
+		}
+	
+	</style>
+	
+	
+	<body>
+	
+		<ul>
+		  	<li><a href="http://localhost:8080/firstapp/index.html">Home</a></li>
+		  	<li><a href="http://localhost:8080/firstapp/login.html">Login</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/evenementen.html">Evenementen</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/evenementenaanpassen.html">Evenementen aanpassen</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/optredenaanvragen.html">Optreden aanvragen</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/optredenbekijken.html">Optreden bekijken</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/registreerders.html">Registreerders</a></li>
+	    	<li><a href="http://localhost:8080/firstapp/registreren.html">Registreren</a></li>
+	</ul>
+		<form id="loginform" style= "margin-left: 25%">
+			<h1>INLOGGEN</h1>
+			<table>
+				<tbody>
+					<tr>
+						<td>Gebruikersnaam:</td>
+						<td><input type="text" name="username" value=""></td>
+					</tr>
+					<tr>
+						<td>Wachtwoord:</td>
+						<td><input type="text" name="password" value=""></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" value="login" id="login"> </td>					
+					</tr>				
+				</tbody>			
+			</table>
+			
+		</form>
+	</body>
+	<script>
+	
+	$("#login").click(function(event) {
+		var data = $("#loginform").serialize();
+		
+		$.post("restservices/authentication", data, function(response) {
+			window.sessionStorage.setItem("sessionToken", response);
+			 window.location='http://localhost:8080/firstapp/';
+			
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.log(textStatus);
+			console.log(errorThrown);
+			
+		});
+	});
+	
+	$.ajax({ 
+		url: "restservices/countries/", 
+		method: "GET", 
+		beforeSend: function (xhr) { 
+			var token = window.sessionStorage.getItem("sessionToken"); 
+			xhr.setRequestHeader( 'Authorization', 'Bearer ' + token); 
+			}, 
+			success: function (countryList) { 
+				/* Handle countryList */ 
+			} 
+		});
+	
+	
+
+	</script>
+</html>

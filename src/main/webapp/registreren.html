@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mistehan's website</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	
+	</head>
+	
+	
+	<style>
+		body {
+    		margin: 0;
+    		}
+		
+		ul {
+		    list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		    width: 20%;
+		    background-color: #f1f1f1;
+		    position: fixed;
+		    height: 100%;
+		    overflow: auto;
+		}
+		
+		li a {
+		    display: block;
+		    color: #000;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		li a.active {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+		
+		li a:hover:not(.active) {
+		    background-color: #555;
+		    color: white;
+		}
+	
+	</style>
+
+	<body>
+	
+	
+
+	<ul>
+	  <li><a href="http://localhost:8080/firstapp/index.html">Home</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementen.html">Evenementen</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementenaanpassen.html">Evenementen aanpassen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenaanvragen.html">Optreden aanvragen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenbekijken.html">Optreden bekijken</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreerders.html">Registreerders</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreren.html">Registreren</a></li>
+	</ul>
+	
+	<div style= "margin-left: 25%">
+		<h1>REGISTREREN</h1>
+		<form id="newGebruiker">
+		<table>
+			<tbody>
+				<tr>
+					<td>Gebruikersnaam:</td>
+					<td><input type="text" id="gebruikersnaam" name="gebruikersnaam"></td>
+					<td>Wachtwoord:</td>
+					<td><input type="text" id="wachtwoord" name="wachtwoord"></td>
+				</tr>
+				<tr>
+					<td>Naam:</td>
+					<td><input type="text" id="naam" name="naam"></td>
+					<td>E-mailadres:</td>
+					<td><input type="text" id="emailadres" name="emailadres"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><input type="button" id="registreren" value="registreren"></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		</form>
+	
+		
+		
+		<div id="response"></div>
+	
+	</div>
+
+
+	
+
+
+	</body>
+	<script>
+	
+	$("#registreren").click(function(response) {
+		var data = $("#newGebruiker").serialize();
+		$.post("/firstapp/restservices/gebruiker", data, function(response) {
+			$("#response").text(JSON.stringify(response));
+		});
+	});
+
+	</script>

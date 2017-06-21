@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mistehan's website</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	
+	</head>
+	
+	
+	<style>
+		body {
+    		margin: 0;
+    		}
+		
+		ul {
+		    list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		    width: 20%;
+		    background-color: #f1f1f1;
+		    position: fixed;
+		    height: 100%;
+		    overflow: auto;
+		}
+		
+		li a {
+		    display: block;
+		    color: #000;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		li a.active {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+		
+		li a:hover:not(.active) {
+		    background-color: #555;
+		    color: white;
+		}
+		
+		table {
+			width: 75%;
+			
+			}
+		table {
+			border: 1px solid black;
+		}
+	
+	</style>
+
+	<body>
+
+	<ul>
+	  <li><a href="http://localhost:8080/firstapp/index.html">Home</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementen.html">Evenementen</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementenaanpassen.html">Evenementen aanpassen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenaanvragen.html">Optreden aanvragen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenbekijken.html">Optreden bekijken</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreerders.html">Registreerders</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreren.html">Registreren</a></li>
+	</ul>
+	
+	<div style= "margin-left: 25%">
+		<h1>AANVRAGEN BEKIJKEN</h1>
+	
+		<table>
+			<thead>
+				<tr>
+					<td>Evenementnummer</td>
+					<td>Naam</td>
+					<td>Plaats</td>
+					<td>Festivalnaam</td>
+					<td>bericht</td>
+					<td>geaccepteerd</td>
+				</tr>
+			</thead>
+			<tbody id="aanvragen"></tbody>
+		</table>
+		
+		<div id="response"></div>
+		<form id="updateGeaccepteerdForm"> 
+		<input type="text" placeholder="evenementnummer" id="evenementnummer" name="evenementnummer" /> 
+
+		<input type="button" id="accept" value="accept" /> </form>
+	
+	</div>
+	</body>
+	</body>
+	<script>
+	
+	function loadAanvragen() {
+		$.get("http://localhost:8080/firstapp/restservices/aanvraag", function(data) {
+			var tabel = $("#aanvragen");
+			$.each(data, function (x, y) {
+				 var tr = $("<tr></tr>");
+				 tr.append("<td>" + y.evenementnummer + "</td>");
+	        	 tr.append("<td>" + y.gebruikersnaam + "</td>");
+	        	 tr.append("<td>" + y.plaats + "</td>");
+	        	 tr.append("<td>" + y.festivalnaam + "</td>");
+	        	 tr.append("<td>" + y.bericht + "</td>");
+	        	 tr.append("<td>" + y.geaccepteerd + "</td>");
+	        	 
+	        	 var verwijderen = $("<input type=button value=weigeren id=weigeren>");
+	        	 
+	        	 verwijderen.click(function() {
+	        		 var uri = "http://localhost:8080/firstapp/restservices/aanvraag/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "delete", 
+		     		        success: function(response) {
+		     		            $("#response").text("Aanvraag deleted!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response").text("Could not delete aanvraag!");
+		     		        }
+		     		    });
+	        	 });
+        	 
+	        	 var tdverwijderen = $("<td></td>");
+	        	 tdverwijderen.append(verwijderen);
+	        	 tr.append(tdverwijderen);
+	        	 tabel.append(tr);
+			});	
+			
+		});
+	}
+	
+	$("#accept").click(function() {
+		 var uri = "http://localhost:8080/firstapp/restservices/aanvraag/" + $("#evenementnummer").val();
+		 console.log(uri);
+		 $.ajax(uri, { 
+		        type: "put",
+		        data: $("updateGeaccepteerdForm").serialize(),
+
+		        success: function(response) {
+		            $("#response").text("Aanvraag aangepast!");
+
+		        },
+		        error: function(response) {
+		            $("#response").text("Could not update aanvraag!");
+
+		        }
+		    });
+	 });
+
+	loadAanvragen();
+
+	</script>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mistehan's website</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+	
+	
+	<style>
+	
+		table {
+			width: 75%;
+			
+			}
+		table {
+			border: 1px solid black;
+		}
+		body {
+    		margin: 0;
+    		}
+		
+		ul {
+		    list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		    width: 20%;
+		    background-color: #f1f1f1;
+		    position: fixed;
+		    height: 100%;
+		    overflow: auto;
+		}
+		
+		li a {
+		    display: block;
+		    color: #000;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		li a.active {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+		
+		li a:hover:not(.active) {
+		    background-color: #555;
+		    color: white;
+		}
+	
+	</style>
+
+	<body>
+
+	<ul>
+	  <li><a href="http://localhost:8080/firstapp/index.html">Home</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementen.html">Evenementen</a></li>
+    <li><a href="http://localhost:8080/firstapp/evenementenaanpassen.html">Evenementen aanpassen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenaanvragen.html">Optreden aanvragen</a></li>
+    <li><a href="http://localhost:8080/firstapp/optredenbekijken.html">Optreden bekijken</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreerders.html">Registreerders</a></li>
+    <li><a href="http://localhost:8080/firstapp/registreren.html">Registreren</a></li>
+	</ul>
+	
+	<div style= "margin-left: 25%">
+		<h1>EVENEMENTEN</h1>
+		
+		<table>
+			<thead>
+			<tr>
+			<td>Festivalnaam</td>
+			<td>Plaats</td>
+			<td>Opmerking</td>
+			</tr>
+			</thead>
+			<tbody id="gegevens"></tbody>		
+		</table>			
+	</div>
+	</body>
+	<script>
+	
+	function loadAanvragen() {
+		$.get("http://localhost:8080/firstapp/restservices/aanvraag/geaccepteerd", function(data) {
+			var tabel = $("#gegevens");
+			$.each(data, function (x, y) {
+				 var tr = $("<tr></tr>");
+	        	 tr.append("<td>" + y.festivalnaam + "</td>");
+	        	 tr.append("<td>" + y.plaats + "</td>");
+	        	 tr.append("<td>" + y.opmerking + "</td>");
+	        	 	        	 
+	        	 tabel.append(tr);
+			});						
+		});
+	}	
+	
+	loadAanvragen();
+	</script>
