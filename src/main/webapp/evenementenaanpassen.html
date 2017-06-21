@@ -104,7 +104,7 @@
 	<script>
 	
 	function loadAanvragen() {
-		$.get("http://localhost:8080/firstapp/restservices/aanvraag/geaccepteerd", function(data) {
+		$.get("restservices/aanvraag/geaccepteerd", function(data) {
 			var tabel = $("#gegevens");
 			$.each(data, function (x, y) {
 				 var tr = $("<tr onclick='reacties()'></tr>");
@@ -124,7 +124,7 @@
 	}
 	
 	$("#aanpassen").click(function() {
-		 var uri = "http://localhost:8080/firstapp/restservices/aanvraag/opmerking/" + $("#evenementnummer").val();
+		 var uri = "restservices/aanvraag/opmerking/" + $("#evenementnummer").val();
 		 console.log(uri);
 		 $.ajax(uri, { 
 		        type: "put",

@@ -91,7 +91,7 @@
 	<script>
 	
 	function loadAanvragen() {
-		$.get("http://localhost:8080/firstapp/restservices/aanvraag", function(data) {
+		$.get("restservices/aanvraag", function(data) {
 			var tabel = $("#aanvragen");
 			$.each(data, function (x, y) {
 				 var tr = $("<tr></tr>");
@@ -105,7 +105,7 @@
 	        	 var verwijderen = $("<input type=button value=weigeren id=weigeren>");
 	        	 
 	        	 verwijderen.click(function() {
-	        		 var uri = "http://localhost:8080/firstapp/restservices/aanvraag/" + y.evenementnummer;
+	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
 	        		 console.log(uri);
 	        		 $.ajax(uri, { 
 		     		        type: "delete", 
@@ -128,7 +128,7 @@
 	}
 	
 	$("#accept").click(function() {
-		 var uri = "http://localhost:8080/firstapp/restservices/aanvraag/" + $("#evenementnummer").val();
+		 var uri = "restservices/aanvraag/" + $("#evenementnummer").val();
 		 console.log(uri);
 		 $.ajax(uri, { 
 		        type: "put",
