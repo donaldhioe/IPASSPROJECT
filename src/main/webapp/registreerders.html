@@ -76,7 +76,7 @@
 	</body>
 	<script>	
 		function loadGebruikers() {
-			$.get("restservices/gebruiker", function(data) {
+			$.get("/restservices/gebruiker", function(data) {
 				var tabel = $("#registratiegegevens");
 				$.each(data, function (x, y) {
 					 var tr = $("<tr></tr>");
