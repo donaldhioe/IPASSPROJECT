@@ -99,7 +99,7 @@
 	
 	$("#registreren").click(function(response) {
 		var data = $("#newGebruiker").serialize();
-		$.post("/firstapp/restservices/gebruiker", data, function(response) {
+		$.post("restservices/gebruiker", data, function(response) {
 			$("#response").text(JSON.stringify(response));
 		});
 	});

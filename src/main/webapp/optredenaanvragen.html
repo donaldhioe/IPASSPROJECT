@@ -81,7 +81,7 @@
 	
 	$("#aanvragen").click(function(response) {
 		var data = $("#newOptreden").serialize();
-		$.post("http://localhost:8080/firstapp/restservices/aanvraag", data, function(response) {
+		$.post("restservices/aanvraag", data, function(response) {
 			$("#response").text("De aanvraag is aangemaakt");
 		});
 	});
