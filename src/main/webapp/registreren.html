@@ -100,7 +100,7 @@
 	$("#registreren").click(function(response) {
 		var data = $("#newGebruiker").serialize();
 		$.post("restservices/gebruiker", data, function(response) {
-			$("#response").text("U hebt succesvol kunnen registreren"));
+			$("#response").text("U hebt succesvol kunnen registreren");
 		});
 	});
 
