@@ -76,7 +76,7 @@
 	</body>
 	<script>	
 		function loadGebruikers() {
-			$.get("https://ipassopdracht.herokuapp.com/optredenbekijken.html/gebruiker", function(data) {
+			$.get("restservices/gebruiker", function(data) {
 				var tabel = $("#registratiegegevens");
 				$.each(data, function (x, y) {
 					 var tr = $("<tr></tr>");
