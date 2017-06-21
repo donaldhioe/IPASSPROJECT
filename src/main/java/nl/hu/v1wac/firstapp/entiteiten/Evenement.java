@@ -10,7 +10,6 @@ public class Evenement {
 	private String opmerking;
 	private String geaccepteerd;
 	private String gebruikersnaam;
-	private Gebruiker emailadres;
 	
 	
 	public Evenement(int evenementnummer, String datum, String plaats, String festivalnaam, String bericht, String opmerking, String geaccepteerd, String gebruikersnaam) {
@@ -22,7 +21,6 @@ public class Evenement {
 		this.bericht = bericht;
 		this.opmerking = opmerking;
 		this.geaccepteerd = geaccepteerd;
-		//this.emailadres = emailadres;
 	}
 	
 	public Evenement( String plaats, String festivalnaam, String bericht, String gebruikersnaam, String datum) {
@@ -65,8 +63,6 @@ public class Evenement {
 		return geaccepteerd;
 	}
 	
-	public Gebruiker getEmailadres() {
-		return emailadres;
-	}
+
 
 }

@@ -72,7 +72,6 @@ public class AanvraagResource {
 			job.add("bericht", a.getBericht());
 			job.add("geaccepteerd", a.getGeaccepteerd());
 			job.add("opmerking", a.getOpmerking());	
-			//job.add("datum", a.getDatum());
 			
 			jab.add(job);
 			
@@ -106,14 +105,13 @@ public class AanvraagResource {
 		job.add("plaats", e.getPlaats());
 		job.add("festivalnaam", e.getFestivalnaam());
 		job.add("bericht", e.getBericht());
-		//job.add("datum", e.getDatum());
+
 		return job;
 	}
 	
 	@DELETE
-	//@RolesAllowed("user")
 	@Path("{evenementnummer}")
-	public Response deleteCountry(@PathParam("evenementnummer") int evenementnummer) {
+	public Response deleteEvenement(@PathParam("evenementnummer") int evenementnummer) {
 		System.out.println("Deleting aanvraag");
 		AanvraagService service = ServiceProvider.getAanvraagService();
 
@@ -181,25 +179,4 @@ public class AanvraagResource {
 				return Response.ok().build();
 			}
 	}
-	
-	/*@PUT
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Path("{/opmerking/{evenementnummer}") 
-	@Produces("application/json") 
-	public String addOpmerking(@PathParam("opmerkingwijzigen") int evenementnummer,
-								 @FormParam("opmerking") String opmerking) {
-		Evenement found = null;
-			
-		for (Evenement evenement : service.getAllAanvragen()) { 
-			if (evenement.getEvenementnummer() == evenementnummer) {
-				evenement.getOpmerking().equals(opmerking);
-				return aanvraagToJson(found).build().toString();
-			}
-
-		}
-		throw new WebApplicationException("Customer not found!");
-				
-	}*/
-
-
 }
