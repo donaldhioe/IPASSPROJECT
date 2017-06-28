@@ -160,10 +160,14 @@ public class AanvraagResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/opmerking/{evenementnummer}") 
 	@Produces("application/json") 
-	public Response updateOpmerking(@PathParam("evenementnummer") int evenementnummer,
+	public String updateOpmerking(@PathParam("evenementnummer") int evenementnummer,
 									@FormParam("opmerking") String opmerking) {
 		System.out.println("update opmerking");
-		Evenement found = null;
+		Evenement evenement = service.getAanvraagByAanvraagnummer(evenementnummer);
+		Evenement updateOpmerking = new Evenement(evenement.getEvenementnummer(), opmerking);
+		service.addOpmerking(updateOpmerking);
+		return "succes";
+		/*Evenement found = null;
 		for (Evenement e : service.getAllAanvragen()) {
 			if(e.getEvenementnummer() == evenementnummer) {
 				e.getOpmerking().equals(opmerking);
@@ -177,6 +181,6 @@ public class AanvraagResource {
 				service.addOpmerking(found);
 				System.out.println("opmerking geupdated");
 				return Response.ok().build();
-			}
+			}*/
 	}
 }

@@ -30,6 +30,10 @@ public class Evenement {
 		this.bericht = bericht;
 		this.datum = datum;
 	}
+	public Evenement(int evenementnummer, String opmerking) {
+		this.evenementnummer = evenementnummer;
+		this.opmerking = opmerking;
+	}
 	
 	public String getGebruikersnaam() {
 		return gebruikersnaam;

@@ -89,7 +89,7 @@ public class EvenementDao extends BaseDAO {
 	public Evenement addOpmerking(Evenement evenement) {
 		try (Connection con = getConnection()) {			
 			Statement stmt = con.createStatement();
-			String query = "UPDATE evenement SET opmerking = 'dit is een test' where evenementnummer =" + evenement.getEvenementnummer();
+			String query = "UPDATE evenement SET opmerking = '" + evenement.getOpmerking() + "' where evenementnummer =" + evenement.getEvenementnummer();
 			stmt.executeUpdate(query);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
