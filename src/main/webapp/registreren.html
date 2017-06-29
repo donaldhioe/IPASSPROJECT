@@ -63,7 +63,7 @@
 			<tbody>
 				<tr>
 					<td>Gebruikersnaam:</td>
-					<td><input pattern="{1,}" type="text" id="gebruikersnaam" name="gebruikersnaam" maxlength="20"></td>
+					<td><input type="text" id="gebruikersnaam" name="gebruikersnaam" maxlength="20"></td>
 					<td>Wachtwoord:</td>
 					<td><input type="text" id="wachtwoord" name="wachtwoord" maxlength="30"></td>
 				</tr>
@@ -98,10 +98,16 @@
 	<script>
 	
 	$("#registreren").click(function(response) {
-		var data = $("#newGebruiker").serialize();
-		$.post("restservices/gebruiker", data, function(response) {
-			$("#response").text("U hebt succesvol kunnen registreren");
-		});
+		if( $('#gebruikersnaam').val() != "" && $('#wachtwoord').val() != "" && $('#naam').val() != "" && $('#emailadres').val() != "" ) {
+			var data = $("#newGebruiker").serialize();
+			$.post("restservices/gebruiker", data, function(response) {
+				$("#response").text("U hebt succesvol kunnen registreren");
+			});
+			
+		} else {
+			$("#response").text("Niet alle velden zijn ingevuld!");
+		}
+		
 	});
 
 	</script>

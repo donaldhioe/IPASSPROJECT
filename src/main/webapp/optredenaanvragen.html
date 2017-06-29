@@ -80,9 +80,14 @@
 	<script>
 	
 	$("#aanvragen").click(function(response) {
-		var data = $("#newOptreden").serialize();
-		$.post("restservices/aanvraag", data, function(response) {
-			$("#response").text(JSON.stringify(response));
-		});
+		if( $('#naam').val() != "" && $('#plaats').val() != "" && $('#festivalnaam').val() != "") {
+			var data = $("#newOptreden").serialize();
+			$.post("restservices/aanvraag", data, function(response) {
+				$("#response").text("U hebt succesvol de aanvraag verstuurd!");
+			});
+		} else {
+			$("#response").text("Niet alle velden zijn ingevuld!");
+		}
+		
 	});
 	</script>
