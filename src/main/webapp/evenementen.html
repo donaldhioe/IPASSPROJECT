@@ -7,9 +7,21 @@
 	
 	
 	<style>
+		#head {
+		font-size: 125%;
+		font-weight: bold;
+		}
 		#extra {
 		 border: 1px solid black;
 		 width: 300px;
+		 font-size: 125%;
+		}
+		#gegevens {
+		font-size: 125%;
+		}
+		
+		#search {
+		width: 25%;
 		}
 	
 		table {
@@ -67,9 +79,20 @@
 	
 	<div style= "margin-left: 25%">
 		<h1>EVENEMENTEN</h1>
+		<table id="search">
+			<tr>
+				<td><input type="text" id="myInput" onkeyup="filter()" placeholder="Zoek bij festivalnaam..."></td>
+				<td><input type="text" id="myInput2" onkeyup="filter2()" placeholder="Zoek bij plaats..."></td>
+
+
+				
+			</tr>
+		
+		</table>
+		
 		
 		<table>
-			<thead>
+			<thead id="head">
 			<tr>
 			<td>Festivalnaam</td>
 			<td>Plaats</td>
@@ -93,7 +116,6 @@
 	        	 tr.append("<td>" + y.festivalnaam + "</td>");
 	        	 tr.append("<td>" + y.plaats + "</td>" );
 	        	 tr.append("<td>" + y.opmerking + "</td>");
-	        	 //tr.append("<td><input type=button id=informatie value='meer informatie'></td>")
 	        	 
 	        	 var informatie = $("<input type=button id=informatie value='meer informatie'>");
 
@@ -109,6 +131,42 @@
 			});						
 		});
 	}	
+	
+	function filter() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("gegevens");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[0];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter2() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput2");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("gegevens");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[1];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
 	
 	loadAanvragen();
 	</script>
