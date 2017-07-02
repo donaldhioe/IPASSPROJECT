@@ -1,12 +1,12 @@
 package nl.hu.v1wac.firstapp.webservices;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,12 +17,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import nl.hu.v1wac.firstapp.entiteiten.Evenement;
+import nl.hu.v1wac.firstapp.entiteiten.Locatie;
 
 @Path("/aanvraag")
 
@@ -38,12 +38,15 @@ public class AanvraagResource {
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("evenementnummer", a.getEvenementnummer());
 			job.add("gebruikersnaam", a.getGebruikersnaam());
-			job.add("plaats", a.getPlaats());
 			job.add("festivalnaam", a.getFestivalnaam());
 			job.add("bericht", a.getBericht());
 			job.add("geaccepteerd", a.getGeaccepteerd());
-			//job.add("opmerking", a.getOpmerking());
-			//job.add("datum", a.getDatum());
+			job.add("opmerking", a.getOpmerking());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("plaats", a.getLocatie().getPlaats());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("straat", a.getLocatie().getStraat());
+			job.add("lokaal", a.getLocatie().getLokaal());
 			
 			
 			jab.add(job);
@@ -67,11 +70,15 @@ public class AanvraagResource {
 			JsonObjectBuilder job = Json.createObjectBuilder();
 			job.add("evenementnummer", a.getEvenementnummer());
 			job.add("gebruikersnaam", a.getGebruikersnaam());
-			job.add("plaats", a.getPlaats());
 			job.add("festivalnaam", a.getFestivalnaam());
 			job.add("bericht", a.getBericht());
 			job.add("geaccepteerd", a.getGeaccepteerd());
-			job.add("opmerking", a.getOpmerking());	
+			job.add("opmerking", a.getOpmerking());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("plaats", a.getLocatie().getPlaats());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("straat", a.getLocatie().getStraat());
+			job.add("lokaal", a.getLocatie().getLokaal());
 			
 			jab.add(job);
 			
@@ -87,27 +94,17 @@ public class AanvraagResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces("application/json")
 	public String createAanvraag(@FormParam("gebruikersnaam") String gebruikersnaam,
-								 @FormParam("plaats") String plaats,
 								 @FormParam("festivalnaam") String festivalnaam,
 								 @FormParam("bericht") String bericht,
-								 @FormParam("datum") String datum,
 								 @Context HttpServletResponse servletResponse) throws IOException {
 		System.out.println("aanvraag verwerken");
-		Evenement newAanvraag = new Evenement( gebruikersnaam, plaats, festivalnaam, bericht, datum);
+		Evenement newAanvraag = new Evenement( gebruikersnaam, festivalnaam, bericht);
 		service.createAanvraag(newAanvraag);
 		System.out.println("aanvraag geadded");
 		return aanvraagToJson(newAanvraag).build().toString();
 	}
 	
-	private JsonObjectBuilder aanvraagToJson(Evenement e) {
-		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("gebruikersnaam", e.getGebruikersnaam());
-		job.add("plaats", e.getPlaats());
-		job.add("festivalnaam", e.getFestivalnaam());
-		job.add("bericht", e.getBericht());
-
-		return job;
-	}
+	
 	
 	@DELETE
 	@Path("{evenementnummer}")
@@ -167,20 +164,27 @@ public class AanvraagResource {
 		Evenement updateOpmerking = new Evenement(evenement.getEvenementnummer(), opmerking);
 		service.addOpmerking(updateOpmerking);
 		return "succes";
-		/*Evenement found = null;
-		for (Evenement e : service.getAllAanvragen()) {
-			if(e.getEvenementnummer() == evenementnummer) {
-				e.getOpmerking().equals(opmerking);
-				found = e;
-				break;
-			}
+		
+	}
+	private JsonObjectBuilder aanvraagToJson(Evenement e) {
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		job.add("gebruikersnaam", e.getGebruikersnaam());
+		job.add("festivalnaam", e.getFestivalnaam());
+		job.add("bericht", e.getBericht());
+
+		return job;
+	}
+	
+	private JsonArray buildJsonAanvraagArray(List<Evenement> evenementen) {
+		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+		
+		for (Evenement e : evenementen) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			
+			job.add("straat", e.getLocatie().getStraat());
+			
+			jsonArrayBuilder.add(job);
 		}
-		if (found == null) {
-			return Response.status(Response.Status.NOT_FOUND).build();
-			} else {
-				service.addOpmerking(found);
-				System.out.println("opmerking geupdated");
-				return Response.ok().build();
-			}*/
+		return jsonArrayBuilder.build();
 	}
 }

@@ -6,6 +6,11 @@
 </head>
 	
 	<style>
+		#extra {
+			 border: 1px solid black;
+			 width: 300px;
+			 font-size: 125%;
+			}
 		table.tabel {
 			width: 75%;
 			
@@ -95,8 +100,10 @@
 		</table>
 		
 		</form>
-		<p id="reacties"></p>
+		<br>
 		<p id="response"></p>
+		<br>
+		<div id="extra">EXTRA GEGEVENS:</div>
 	
 	</div>
 
@@ -110,11 +117,19 @@
 				 var tr = $("<tr onclick='reacties()'></tr>");
 				 tr.append("<td>" + y.evenementnummer + "</td>");
 	        	 tr.append("<td>" + y.festivalnaam + "</td>");
-	        	 tr.append("<td>" + y.plaats + "</td>");
-	        	 
+	        	 tr.append("<td>" + y.plaats + "</td>");	        	 
 	        	 tr.append("<td>" + y.opmerking + "</td>");
 	        	 
+	        	 var informatie = $("<input type=button id=informatie value='meer informatie'>");
 	        	 
+	        	 informatie.click(function() {
+	 				var obj = $("#extra").text("EXTRA GEGEVENS: \nfestivalnaam: " + y.festivalnaam + "\n gebouwnaam: " + y.naam + "\n straat: " + y.straat + "\n lokaal: " + y.lokaal + "\n plaats: " + y.plaats + "\n opmerking: " + y.opmerking);
+	 				obj.html(obj.html().replace(/\n/g,'</br>'));
+	 				});
+	 				
+	 				var tdinformatie = $("<td></td>");
+	 				tdinformatie.append(informatie);
+	 	        	 tr.append(tdinformatie);
 	        	 
 	        	 tabel.append(tr);
 			});

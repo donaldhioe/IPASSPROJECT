@@ -80,10 +80,6 @@
 		</table>
 		
 		<div id="response"></div>
-		<form id="updateGeaccepteerdForm"> 
-		<input type="text" placeholder="evenementnummer" id="evenementnummer" name="evenementnummer" /> 
-
-		<input type="button" id="accept" value="accept" /> </form>
 	
 	</div>
 	</body>
@@ -103,6 +99,7 @@
 	        	 tr.append("<td>" + y.geaccepteerd + "</td>");
 	        	 
 	        	 var verwijderen = $("<input type=button value=weigeren id=weigeren>");
+	        	 var accepteren = $("<input type=button value=accepteren id=accepteren>");
 	        	 
 	        	 verwijderen.click(function() {
 	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
@@ -117,9 +114,26 @@
 		     		        }
 		     		    });
 	        	 });
+	        	 
+	        	 accepteren.click(function() {
+	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "put", 
+		     		        success: function(response) {
+		     		            $("#response").text("Aanvraag geaccepteerd!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response").text("Could not accept aanvraag!");
+		     		        }
+		     		    });
+	        	 });
         	 
 	        	 var tdverwijderen = $("<td></td>");
+	        	 var tdaccepteren = $("<td></td>");
 	        	 tdverwijderen.append(verwijderen);
+	        	 tdaccepteren.append(accepteren);
+	        	 tr.append(tdaccepteren);
 	        	 tr.append(tdverwijderen);
 	        	 tabel.append(tr);
 			});	
@@ -127,23 +141,6 @@
 		});
 	}
 	
-	$("#accept").click(function() {
-		 var uri = "restservices/aanvraag/" + $("#evenementnummer").val();
-		 console.log(uri);
-		 $.ajax(uri, { 
-		        type: "put",
-		        data: $("updateGeaccepteerdForm").serialize(),
-
-		        success: function(response) {
-		            $("#response").text("Aanvraag aangepast!");
-
-		        },
-		        error: function(response) {
-		            $("#response").text("Could not update aanvraag!");
-
-		        }
-		    });
-	 });
 
 	loadAanvragen();
 

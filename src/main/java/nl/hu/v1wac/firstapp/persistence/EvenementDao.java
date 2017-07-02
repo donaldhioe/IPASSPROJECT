@@ -1,6 +1,7 @@
 package nl.hu.v1wac.firstapp.persistence;
 
 import java.sql.Connection;
+import java.util.Random;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.hu.v1wac.firstapp.entiteiten.Evenement;
+import nl.hu.v1wac.firstapp.entiteiten.Locatie;
 
 public class EvenementDao extends BaseDAO {
+	private LocatieDao locatiedao = new LocatieDao();
 	
 	private List<Evenement> selectEvenement(String query) {
 	    List<Evenement> results = new ArrayList<Evenement>();
@@ -21,16 +24,15 @@ public class EvenementDao extends BaseDAO {
 	      while (dbResultSet.next()) {
 	    	  int evenementnummer = dbResultSet.getInt("evenementnummer");
 		        String gebruikersnaam = dbResultSet.getString("gebruikersnaam");        
-		        String plaats = dbResultSet.getString("plaats");
 		        String festivalnaam = dbResultSet.getString("festivalnaam");
 		        String bericht = dbResultSet.getString("aanvraagbericht");
 		        String opmerking = dbResultSet.getString("opmerking");
 		        String geaccepteerd = dbResultSet.getString("geaccepteerd");
-		        String datum = dbResultSet.getString("datum");
-
 	 
-	        Evenement newEvenement = new Evenement(evenementnummer, datum, plaats, festivalnaam, bericht, opmerking, geaccepteerd, gebruikersnaam);
-	        
+	        Evenement newEvenement = new Evenement(evenementnummer, festivalnaam, bericht, opmerking, geaccepteerd, gebruikersnaam);
+	        //hier locatie dao roepen
+	        Locatie locatie = locatiedao.findByLocatienummer(dbResultSet.getInt("locatienummer"));
+	        newEvenement.setLocatie(locatie);
 	        results.add(newEvenement);
 	      }
 	    } catch (SQLException sqle) { sqle.printStackTrace(); }
@@ -65,9 +67,11 @@ public class EvenementDao extends BaseDAO {
 	}
 	// een nieuwe evenement aanvraag aanmaken
 	public Evenement createEvenement(Evenement evenement) {
+		Random locatienummer = new Random();
+		int n = locatienummer.nextInt(5) + 1;
 		try (Connection con = getConnection()) {			
 			Statement stmt = con.createStatement();
-			String query = "INSERT INTO evenement (evenementnummer, plaats, festivalnaam, aanvraagbericht, opmerking, geaccepteerd, gebruikersnaam)VALUES(nextval('evenementnr'), '" + evenement.getPlaats() + "', '" + evenement.getFestivalnaam() + "', '" + evenement.getBericht() + "', '', '?', '" + evenement.getGebruikersnaam() + "')";
+			String query = "INSERT INTO evenement (evenementnummer, festivalnaam, aanvraagbericht, opmerking, geaccepteerd, gebruikersnaam, locatienummer)VALUES(nextval('evenementnr'), '" + evenement.getFestivalnaam() + "', '" + evenement.getBericht() + "', '', '?', '" + evenement.getGebruikersnaam() + "', + " + n + ")";
 			stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();

@@ -59,12 +59,10 @@
 				<tr>
 					<td>gebruikersnaam:</td>
 					<td><input type="text" id="naam" name="bericht" maxlength="20"></td>
-					<td>Plaats:</td>
-					<td><input type="text" id="plaats" name="gebruikersnaam" maxlength="20"></td>
+					<td>Festivalnaam:</td>
+					<td><input type="text" id="festivalnaam" name="gebruikersnaam" maxlength="30"></td>
 				</tr>
 				<tr>
-					<td>Festivalnaam:</td>
-					<td><input type="text" id="festivalnaam" name="plaats" maxlength="30"></td>
 					<td>Bericht:</td>
 					<td><textarea id="bericht"rows="4" cols="50" name="festivalnaam" maxlength="255"></textarea></td>
 				</tr>
@@ -80,10 +78,10 @@
 	<script>
 	
 	$("#aanvragen").click(function(response) {
-		if( $('#naam').val() != "" && $('#plaats').val() != "" && $('#festivalnaam').val() != "") {
+		if( $('#naam').val() != "" && $('#festivalnaam').val() != "") {
 			var data = $("#newOptreden").serialize();
 			$.post("restservices/aanvraag", data, function(response) {
-				$("#response").text("U hebt succesvol de aanvraag verstuurd!");
+				$("#response").text(JSON.stringify(response));
 			});
 		} else {
 			$("#response").text("Niet alle velden zijn ingevuld!");

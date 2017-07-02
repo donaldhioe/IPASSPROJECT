@@ -3,32 +3,30 @@ package nl.hu.v1wac.firstapp.entiteiten;
 
 public class Evenement {
 	private int evenementnummer;
-	private String datum;
-	private String plaats;
+
 	private String festivalnaam;
 	private String bericht;
 	private String opmerking;
 	private String geaccepteerd;
 	private String gebruikersnaam;
+	private Locatie locatie;
 	
 	
-	public Evenement(int evenementnummer, String datum, String plaats, String festivalnaam, String bericht, String opmerking, String geaccepteerd, String gebruikersnaam) {
+	public Evenement(int evenementnummer, String festivalnaam, String bericht, String opmerking, String geaccepteerd, String gebruikersnaam) {
 		this.gebruikersnaam = gebruikersnaam;
 		this.evenementnummer = evenementnummer;
-		this.datum = datum;
-		this.plaats = plaats;
+
 		this.festivalnaam = festivalnaam;
 		this.bericht = bericht;
 		this.opmerking = opmerking;
 		this.geaccepteerd = geaccepteerd;
 	}
 	
-	public Evenement( String plaats, String festivalnaam, String bericht, String gebruikersnaam, String datum) {
+	public Evenement( String festivalnaam, String bericht, String gebruikersnaam) {
 		this.gebruikersnaam = gebruikersnaam;
-		this.plaats = plaats;
 		this.festivalnaam = festivalnaam;
 		this.bericht = bericht;
-		this.datum = datum;
+
 	}
 	public Evenement(int evenementnummer, String opmerking) {
 		this.evenementnummer = evenementnummer;
@@ -41,14 +39,6 @@ public class Evenement {
 	
 	public int getEvenementnummer() {
 		return evenementnummer;
-	}
-	
-	public String getDatum() {
-		return datum;
-	}
-	
-	public String getPlaats() {
-		return plaats;
 	}
 	
 	public String getFestivalnaam() {
@@ -65,6 +55,14 @@ public class Evenement {
 	
 	public String getGeaccepteerd() {
 		return geaccepteerd;
+	}
+
+	public Locatie getLocatie() {
+		return locatie;
+	}
+
+	public void setLocatie(Locatie locatie) {
+		this.locatie = locatie;
 	}
 	
 
