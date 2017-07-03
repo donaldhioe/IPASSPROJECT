@@ -90,6 +90,70 @@ public class AanvraagResource {
 		
 	}
 	
+	@GET
+	@Path("/nognietgeaccepteerd")
+	@Produces("application/json")
+	public String getAanvragenByNogNietGeaccepteerd() {
+		
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		
+		for ( Evenement a : service.getAanvraagByNogNietGeaccepteerd()) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			job.add("evenementnummer", a.getEvenementnummer());
+			job.add("gebruikersnaam", a.getGebruikersnaam());
+			job.add("festivalnaam", a.getFestivalnaam());
+			job.add("bericht", a.getBericht());
+			job.add("geaccepteerd", a.getGeaccepteerd());
+			job.add("opmerking", a.getOpmerking());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("plaats", a.getLocatie().getPlaats());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("straat", a.getLocatie().getStraat());
+			job.add("lokaal", a.getLocatie().getLokaal());
+			
+			jab.add(job);
+			
+		}
+		
+		JsonArray array = jab.build();
+
+		return array.toString();
+		
+	}
+	
+	@GET
+	@Path("/geweigerd")
+	@Produces("application/json")
+	public String getAanvragenByGeweigerd() {
+		
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		
+		for ( Evenement a : service.getAanvraagByGeweigerd()) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			job.add("evenementnummer", a.getEvenementnummer());
+			job.add("gebruikersnaam", a.getGebruikersnaam());
+			job.add("festivalnaam", a.getFestivalnaam());
+			job.add("bericht", a.getBericht());
+			job.add("geaccepteerd", a.getGeaccepteerd());
+			job.add("opmerking", a.getOpmerking());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("plaats", a.getLocatie().getPlaats());
+			job.add("naam", a.getLocatie().getNaam());
+			job.add("straat", a.getLocatie().getStraat());
+			job.add("lokaal", a.getLocatie().getLokaal());
+			
+			jab.add(job);
+			
+		}
+		
+		JsonArray array = jab.build();
+
+		return array.toString();
+		
+	}
+	
+	
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces("application/json")
@@ -155,6 +219,28 @@ public class AanvraagResource {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("/weigeren/{evenementnummer}") 
+	@Produces("application/json") 
+	public Response weigerAanvraag(@PathParam("evenementnummer") int evenementnummer) {
+		System.out.println("update aanvraag weigeren");
+		Evenement found = null;
+		for (Evenement e : service.getAllAanvragen()) {
+			if(e.getEvenementnummer() == evenementnummer) {
+				found = e;
+				break;
+			}
+		}
+		if (found == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+			} else {
+				service.weigerEvenement(found);
+				System.out.println("aanvraag geweigerd");
+				return Response.ok().build();
+			}
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/opmerking/{evenementnummer}") 
 	@Produces("application/json") 
 	public String updateOpmerking(@PathParam("evenementnummer") int evenementnummer,
@@ -173,18 +259,5 @@ public class AanvraagResource {
 		job.add("bericht", e.getBericht());
 
 		return job;
-	}
-	
-	private JsonArray buildJsonAanvraagArray(List<Evenement> evenementen) {
-		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-		
-		for (Evenement e : evenementen) {
-			JsonObjectBuilder job = Json.createObjectBuilder();
-			
-			job.add("straat", e.getLocatie().getStraat());
-			
-			jsonArrayBuilder.add(job);
-		}
-		return jsonArrayBuilder.build();
 	}
 }

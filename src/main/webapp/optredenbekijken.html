@@ -8,6 +8,10 @@
 	
 	
 	<style>
+		#head {
+			font-size: 125%;
+			font-weight: bold;
+		}
 		body {
     		margin: 0;
     		}
@@ -41,12 +45,10 @@
 		}
 		
 		table {
-			width: 75%;
+			width: 100%;
+			border: 1px solid black;
 			
 			}
-		table {
-			border: 1px solid black;
-		}
 	
 	</style>
 
@@ -65,8 +67,8 @@
 	<div style= "margin-left: 25%">
 		<h1>AANVRAGEN BEKIJKEN</h1>
 	
-		<table>
-			<thead>
+		<table id="geaccepteerd">
+			<thead id="head">
 				<tr>
 					<td>Evenementnummer</td>
 					<td>Naam</td>
@@ -80,6 +82,39 @@
 		</table>
 		
 		<div id="response"></div>
+		<br>
+		
+		<table id="nognietgeaccepteerd">
+			<thead id="head">
+				<tr>
+					<td>Evenementnummer</td>
+					<td>Naam</td>
+					<td>Plaats</td>
+					<td>Festivalnaam</td>
+					<td>bericht</td>
+					<td>geaccepteerd</td>
+				</tr>
+			</thead>
+			<tbody id="aanvragen2"></tbody>
+		</table>
+		
+		<div id="response2"></div>
+		<br>
+		<table id="geweigerd">
+			<thead id="head">
+				<tr>
+					<td>Evenementnummer</td>
+					<td>Naam</td>
+					<td>Plaats</td>
+					<td>Festivalnaam</td>
+					<td>bericht</td>
+					<td>geaccepteerd</td>
+				</tr>
+			</thead>
+			<tbody id="aanvragen3"></tbody>
+		</table>
+		
+		<div id="response3"></div>
 	
 	</div>
 	</body>
@@ -87,7 +122,7 @@
 	<script>
 	
 	function loadAanvragen() {
-		$.get("restservices/aanvraag", function(data) {
+		$.get("restservices/aanvraag/geaccepteerd", function(data) {
 			var tabel = $("#aanvragen");
 			$.each(data, function (x, y) {
 				 var tr = $("<tr></tr>");
@@ -98,19 +133,19 @@
 	        	 tr.append("<td>" + y.bericht + "</td>");
 	        	 tr.append("<td>" + y.geaccepteerd + "</td>");
 	        	 
-	        	 var verwijderen = $("<input type=button value=weigeren id=weigeren>");
+	        	 var weigeren = $("<input type=button value=weigeren id=weigeren>");
 	        	 var accepteren = $("<input type=button value=accepteren id=accepteren>");
 	        	 
-	        	 verwijderen.click(function() {
-	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
+	        	 weigeren.click(function() {
+	        		 var uri = "restservices/aanvraag/weigeren/" + y.evenementnummer;
 	        		 console.log(uri);
 	        		 $.ajax(uri, { 
-		     		        type: "delete", 
+		     		        type: "put", 
 		     		        success: function(response) {
-		     		            $("#response").text("Aanvraag deleted!");
+		     		            $("#response").text("Aanvraag geweigerd!");
 		     		        },
 		     		        error: function(response) {
-		     		            $("#response").text("Could not delete aanvraag!");
+		     		            $("#response").text("Aanvraag niet geweigerd!");
 		     		        }
 		     		    });
 	        	 });
@@ -129,6 +164,116 @@
 		     		    });
 	        	 });
         	 
+	        	 var tdweigeren = $("<td></td>");
+	        	 var tdaccepteren = $("<td></td>");
+	        	 tdweigeren.append(weigeren);
+	        	 tdaccepteren.append(accepteren);
+	        	 tr.append(tdaccepteren);
+	        	 tr.append(tdweigeren);
+	        	 tabel.append(tr);
+			});	
+			
+		});
+	}
+	
+	function loadAanvragen2() {
+		$.get("restservices/aanvraag/nognietgeaccepteerd", function(data) {
+			var tabel = $("#aanvragen2");
+			$.each(data, function (x, y) {
+				 var tr = $("<tr></tr>");
+				 tr.append("<td>" + y.evenementnummer + "</td>");
+	        	 tr.append("<td>" + y.gebruikersnaam + "</td>");
+	        	 tr.append("<td>" + y.plaats + "</td>");
+	        	 tr.append("<td>" + y.festivalnaam + "</td>");
+	        	 tr.append("<td>" + y.bericht + "</td>");
+	        	 tr.append("<td>" + y.geaccepteerd + "</td>");
+	        	 
+	        	 var weigeren = $("<input type=button value=weigeren id=weigeren>");
+	        	 var accepteren = $("<input type=button value=accepteren id=accepteren>");
+	        	 
+	        	 weigeren.click(function() {
+	        		 var uri = "restservices/aanvraag/weigeren/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "put", 
+		     		        success: function(response) {
+		     		            $("#response2").text("Aanvraag geweigerd!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response2").text("Aanvraag niet geweigerd!");
+		     		        }
+		     		    });
+	        	 });
+	        	 
+	        	 accepteren.click(function() {
+	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "put", 
+		     		        success: function(response) {
+		     		            $("#response2").text("Aanvraag geaccepteerd!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response2").text("Could not accept aanvraag!");
+		     		        }
+		     		    });
+	        	 });
+        	 
+	        	 var tdweigeren = $("<td></td>");
+	        	 var tdaccepteren = $("<td></td>");
+	        	 tdweigeren.append(weigeren);
+	        	 tdaccepteren.append(accepteren);
+	        	 tr.append(tdaccepteren);
+	        	 tr.append(tdweigeren);
+	        	 tabel.append(tr);
+			});	
+			
+		});
+	}
+	
+	function loadAanvragen3() {
+		$.get("restservices/aanvraag/geweigerd", function(data) {
+			var tabel = $("#aanvragen3");
+			$.each(data, function (x, y) {
+				 var tr = $("<tr></tr>");
+				 tr.append("<td>" + y.evenementnummer + "</td>");
+	        	 tr.append("<td>" + y.gebruikersnaam + "</td>");
+	        	 tr.append("<td>" + y.plaats + "</td>");
+	        	 tr.append("<td>" + y.festivalnaam + "</td>");
+	        	 tr.append("<td>" + y.bericht + "</td>");
+	        	 tr.append("<td>" + y.geaccepteerd + "</td>");
+	        	 
+	        	 var verwijderen = $("<input type=button value=verwijderen id=verwijderen>");
+	        	 var accepteren = $("<input type=button value=accepteren id=accepteren>");
+	        	 
+	        	 verwijderen.click(function() {
+	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "delete", 
+		     		        success: function(response) {
+		     		            $("#response3").text("Aanvraag deleted!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response3").text("Could not delete aanvraag!");
+		     		        }
+		     		    });
+	        	 });
+	        	 
+	        	 accepteren.click(function() {
+	        		 var uri = "restservices/aanvraag/" + y.evenementnummer;
+	        		 console.log(uri);
+	        		 $.ajax(uri, { 
+		     		        type: "put", 
+		     		        success: function(response) {
+		     		            $("#response3").text("Aanvraag geaccepteerd!");
+		     		        },
+		     		        error: function(response) {
+		     		            $("#response3").text("Could not accept aanvraag!");
+		     		        }
+		     		    });
+	        	 });
+        	 
 	        	 var tdverwijderen = $("<td></td>");
 	        	 var tdaccepteren = $("<td></td>");
 	        	 tdverwijderen.append(verwijderen);
@@ -143,5 +288,7 @@
 	
 
 	loadAanvragen();
+	loadAanvragen2();
+	loadAanvragen3();
 
 	</script>

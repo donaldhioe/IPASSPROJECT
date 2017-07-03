@@ -49,6 +49,14 @@ public class EvenementDao extends BaseDAO {
 	public List<Evenement> findByGeaccepteerd() {
 		return selectEvenement("SELECT * from evenement where geaccepteerd = 'ja'"); 
 	}
+	//alle informatie van de tabel weergeven die geweigerd zijn
+		public List<Evenement> findByGeweigerd() {
+			return selectEvenement("SELECT * from evenement where geaccepteerd = 'nee'"); 
+		}
+	//alle informatie van de tabel weergeven die nog niet beantwoord zijn
+		public List<Evenement> findByNogNietGeaccepteerd() {
+			return selectEvenement("SELECT * from evenement where geaccepteerd = '?'"); 
+		}
 	  
 	// alle informatie van de tabel vinden die gelinkt zijn met de evenementnummer
 	public Evenement findByAanvraagnummer(int evenementnummer) {
@@ -89,6 +97,18 @@ public class EvenementDao extends BaseDAO {
 		}
 		return evenement;
 	}
+	
+	// de aangevraagde evenement weigeren
+		public Evenement weigerEvenement(Evenement evenement) {
+			try (Connection con = getConnection()) {			
+				Statement stmt = con.createStatement();
+				String query = "UPDATE evenement SET geaccepteerd = 'nee' where evenementnummer =" + evenement.getEvenementnummer();
+				stmt.executeUpdate(query);
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+			return evenement;
+		}
 	// een opmerking toevoegen voor bij een geaccepteerde evenement
 	public Evenement addOpmerking(Evenement evenement) {
 		try (Connection con = getConnection()) {			

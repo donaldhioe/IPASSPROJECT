@@ -17,7 +17,15 @@ public class AanvraagService {
 	public List<Evenement> getAanvraagByGeaccepteerd() {
 		return CDAO.findByGeaccepteerd();
 	}
-
+	
+	public List<Evenement> getAanvraagByNogNietGeaccepteerd() {
+		return CDAO.findByNogNietGeaccepteerd();
+	}
+	
+	public List<Evenement> getAanvraagByGeweigerd() {
+		return CDAO.findByGeweigerd();
+	}
+	
 
 	public Evenement getAanvraagByAanvraagnummer(int evenementnummer) {
 		return CDAO.findByAanvraagnummer(evenementnummer);
@@ -34,6 +42,10 @@ public class AanvraagService {
 	
 	public Evenement addEvenement(Evenement evenement) {
 		return CDAO.addEvenement(evenement);
+	}
+	
+	public Evenement weigerEvenement(Evenement evenement) {
+		return CDAO.weigerEvenement(evenement);
 	}
 	
 	public Evenement addOpmerking(Evenement evenement) {
