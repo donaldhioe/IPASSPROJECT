@@ -6,11 +6,22 @@
 </head>
 	
 	<style>
+		#head {
+		font-size: 125%;
+		font-weight: bold;
+		}
 		#extra {
-			 border: 1px solid black;
-			 width: 300px;
-			 font-size: 125%;
-			}
+		 border: 1px solid black;
+		 width: 300px;
+		 font-size: 125%;
+		}
+		#gegevens {
+		font-size: 125%;
+		}
+		
+		#search {
+		width: 25%;
+		}
 		table.tabel {
 			width: 75%;
 			
@@ -68,7 +79,7 @@
 		<h1>EVENEMENTEN AANPASSEN</h1>
 	
 	<table class="tabel">
-			<thead class="thead">
+			<thead id="head">
 			<tr>
 			<td>Evenementnummer</td>
 			<td>Festivalnaam</td>
@@ -121,15 +132,24 @@
 	        	 tr.append("<td>" + y.opmerking + "</td>");
 	        	 
 	        	 var informatie = $("<input type=button id=informatie value='meer informatie'>");
+	        	 var aanpassen = $("<input type=button id=aanpassen value='opmerking aanpassen'>")
 	        	 
 	        	 informatie.click(function() {
 	 				var obj = $("#extra").text("EXTRA GEGEVENS: \nfestivalnaam: " + y.festivalnaam + "\n gebouwnaam: " + y.naam + "\n straat: " + y.straat + "\n lokaal: " + y.lokaal + "\n plaats: " + y.plaats + "\n opmerking: " + y.opmerking);
 	 				obj.html(obj.html().replace(/\n/g,'</br>'));
 	 				});
+	        	 
+	        	 aanpassen.click(function() {
+	        		 $("#evenementnummer").val(y.evenementnummer);
+	        		 $("#opmerking").val(y.opmerking);
+	        	 });
 	 				
 	 				var tdinformatie = $("<td></td>");
+	 				var tdaanpassen = $("<td></td>");
 	 				tdinformatie.append(informatie);
+	 				tdaanpassen.append(aanpassen);
 	 	        	 tr.append(tdinformatie);
+	 	        	 tr.append(tdaanpassen);
 	        	 
 	        	 tabel.append(tr);
 			});
