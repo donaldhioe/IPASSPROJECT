@@ -89,6 +89,12 @@
 	<h1 id="titel">AANVRAGEN BEKIJKEN</h1>
 		
 		<div id=tabel>
+		<table id="search">
+			<tr>
+				<td><input type="text" id="myInput" onkeyup="filter()" placeholder="Zoek bij naam..."></td>
+				<td><input type="text" id="myInput2" onkeyup="filter2()" placeholder="Zoek bij plaats..."></td>				
+			</tr>		
+		</table>
 		
 		<table id="geaccepteerd">
 			<thead id="head">
@@ -113,6 +119,12 @@
 
 		
 		<div id=tabel2>
+		<table id="search2">
+			<tr>
+				<td><input type="text" id="myInput3" onkeyup="filter3()" placeholder="Zoek bij naam..."></td>
+				<td><input type="text" id="myInput4" onkeyup="filter4()" placeholder="Zoek bij plaats..."></td>				
+			</tr>		
+		</table>
 		<table id="nognietgeaccepteerd">
 			<thead id="head">
 				<tr>
@@ -134,6 +146,12 @@
 		<div id="extra2">EXTRA GEGEVENS:</div>
 		
 		<div id="tabel3">
+		<table id="search2">
+			<tr>
+				<td><input type="text" id="myInput5" onkeyup="filter5()" placeholder="Zoek bij naam..."></td>
+				<td><input type="text" id="myInput6" onkeyup="filter6()" placeholder="Zoek bij plaats..."></td>				
+			</tr>		
+		</table>
 		<table id="geweigerd">
 			<thead id="head">
 				<tr>
@@ -360,5 +378,113 @@
 	loadAanvragen();
 	loadAanvragen2();
 	loadAanvragen3();
+	
+	function filter() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[1];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter2() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput2");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[2];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter3() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput3");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen2");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[1];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter4() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput4");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen2");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[2];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter5() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput5");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen3");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[1];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
+	
+	function filter6() {
+		  var input, filter, table, tr, td, i;
+		  input = document.getElementById("myInput6");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("aanvragen3");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[2];
+		    if (td) {
+		      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }       
+		  }
+		}
 
 	</script>
