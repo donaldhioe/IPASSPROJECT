@@ -1,8 +1,6 @@
 package nl.hu.v1wac.firstapp.webservices;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -22,7 +20,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import nl.hu.v1wac.firstapp.entiteiten.Evenement;
-import nl.hu.v1wac.firstapp.entiteiten.Locatie;
 
 @Path("/aanvraag")
 
